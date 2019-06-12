@@ -86,15 +86,39 @@
 /************************************************************************/
 /******/ ({
 
-/***/ "./src/javascript/skateboard.js":
+/***/ "./src/javascript/Game.js":
+/*!********************************!*\
+  !*** ./src/javascript/Game.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _World__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./World */ \"./src/javascript/World.js\");\n\n\n\nclass Game {\n    constructor() {\n        this.canvas = document.getElementById('skateCanvas');\n        this.ctx = this.canvas.getContext('2d');\n        \n        this.world = new _World__WEBPACK_IMPORTED_MODULE_0__[\"default\"]({\n            canvas: this.canvas,\n            ctx: this.ctx\n        });\n        \n        this.renderGame = this.renderGame.bind(this);\n        \n    }\n\n\n    renderGame () {\n        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);\n        this.world.renderWorld();\n        \n    }\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (Game);\n\n//# sourceURL=webpack:///./src/javascript/Game.js?");
+
+/***/ }),
+
+/***/ "./src/javascript/Skateboard.js":
 /*!**************************************!*\
-  !*** ./src/javascript/skateboard.js ***!
+  !*** ./src/javascript/Skateboard.js ***!
   \**************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n\nclass Skateboard  {\n    constructor(options) {\n        this.context = options.context;\n        this.image = options.image;\n        this.skateboardHeight = 10;\n        this.skateboardWidth = 150;\n    }\n\n    moveBoard () {\n        document.addEventListener('keydown', keyDownHandler, false);\n        document.addEventListener('keyup', keyUpHandler, false);\n\n        \n    }\n    \n    renderBoard () {\n        // this.context.drawImage(this.image, 0, 0)\n        this.context.beginPath();\n        this.context.rect(20, 600, this.skateboardWidth, this.skateboardHeight);\n        this.context.fillStyle = \"#FF0000\";\n        this.context.fill();\n        this.context.closePath();\n    }\n}\n\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (Skateboard);\n\n\n\n//# sourceURL=webpack:///./src/javascript/skateboard.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n\nclass Skateboard  {\n    constructor(options) {\n        this.ctx = options.ctx;\n        this.canvas = options.canvas;\n        this.image = options.image;\n\n        this.groundLevel = 600;\n\n        this.skateboardHeight = 10;\n        this.skateboardWidth = 150;\n\n        this.skateboardX = (this.canvas.width - this.skateboardWidth) / 2\n        this.skateboardY = this.groundLevel;\n        this.speedX = 0;\n        this.speedY = 0;\n\n        this.gravity = .1;\n        this.gravitySpeed = 0;\n\n        \n        this.spacePressed = false;\n\n        \n        this.popBoard = this.popBoard.bind(this);\n        this.landBoard = this.landBoard.bind(this);\n        this.hitGround = this.hitGround.bind(this);\n        this.renderBoard = this.renderBoard.bind(this);\n        this.boardGravity = this.boardGravity.bind(this);\n        this.accelerate = this.accelerate.bind(this);\n\n        document.addEventListener('keydown', this.popBoard, false);\n        document.addEventListener('keyup', this.landBoard, false);\n    }\n\n    accelerate(n) {\n        this.gravity = n;\n    }\n\n    boardGravity ()  {\n        this.gravitySpeed += this.gravity;\n        this.skateboardY += this.speedY + this.gravitySpeed;\n\n        this.hitGround();\n    }\n\n    hitGround () {\n        \n        let groundLevel = this.groundLevel;\n\n        if (this.skateboardY > groundLevel) {\n            this.skateboardY = groundLevel;\n            this.gravitySpeed = 0;\n        }\n\n    }\n\n\n    popBoard (e) {\n        if (e.key == \" \") {\n            this.spacePressed = true;\n        }\n    }\n\n    landBoard (e) {\n        if (e.key == \" \"){\n            this.spacePressed = false;\n        }\n    }\n    \n    renderBoard () {\n        this.boardGravity();\n        \n        if (this.spacePressed) {\n            if (this.skateboardY > 520) {\n            this.accelerate(-1);\n            } else {\n                this.spacePressed = false;\n            }\n\n        } else if (!this.spacePressed) {\n             \n            this.accelerate(0.4);\n         \n        }\n        \n        this.ctx.beginPath();\n        this.ctx.rect(this.skateboardX, this.skateboardY, this.skateboardWidth, this.skateboardHeight);\n        this.ctx.fillStyle = \"#FF0000\";\n        this.ctx.fill();\n        this.ctx.closePath();\n\n\n    }\n}\n\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (Skateboard);\n\n\n\n//# sourceURL=webpack:///./src/javascript/Skateboard.js?");
+
+/***/ }),
+
+/***/ "./src/javascript/World.js":
+/*!*********************************!*\
+  !*** ./src/javascript/World.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _Skateboard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Skateboard */ \"./src/javascript/Skateboard.js\");\n\n\nclass World {\n    constructor(options) {\n        this.ctx = options.ctx;\n        this.canvas = options.canvas;\n        this.skateboard = new _Skateboard__WEBPACK_IMPORTED_MODULE_0__[\"default\"]({\n            ctx: this.ctx,\n            canvas: this.canvas\n        })\n\n\n       \n        \n    }\n\n   \n\n    renderWorld () {\n        this.skateboard.renderBoard();\n    }\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (World);\n\n//# sourceURL=webpack:///./src/javascript/World.js?");
 
 /***/ }),
 
@@ -106,7 +130,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n\nclass Skateboard  {\n    co
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _javascript_skateboard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./javascript/skateboard */ \"./src/javascript/skateboard.js\");\n\n\ndocument.addEventListener('DOMContentLoaded', ()=> {\n    let canvas = document.getElementById('skateCanvas');\n\n    // let boardImage = new Image(256, 64);\n    // boardImage.src = \"skateAssets/board1.png\"\n\n    let board1 = new _javascript_skateboard__WEBPACK_IMPORTED_MODULE_0__[\"default\"]({\n        context: canvas.getContext('2d'),\n        // image: boardImage\n    })\n\n    board1.renderBoard();\n});\n\n//# sourceURL=webpack:///./src/main.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _javascript_Game__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./javascript/Game */ \"./src/javascript/Game.js\");\n\n\n\ndocument.addEventListener('DOMContentLoaded', ()=> {\n\n    let game = new _javascript_Game__WEBPACK_IMPORTED_MODULE_0__[\"default\"]();\n    \n    let animate =  () => {\n        game.renderGame();\n        requestAnimationFrame(animate);\n    }\n\n    requestAnimationFrame(animate);\n    \n});\n\n\n\n\n\n\n//# sourceURL=webpack:///./src/main.js?");
 
 /***/ })
 

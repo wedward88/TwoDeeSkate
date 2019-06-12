@@ -1,15 +1,19 @@
-import Skateboard from './javascript/skateboard'
+import Game from './javascript/Game';
+
 
 document.addEventListener('DOMContentLoaded', ()=> {
-    let canvas = document.getElementById('skateCanvas');
 
-    // let boardImage = new Image(256, 64);
-    // boardImage.src = "skateAssets/board1.png"
+    let game = new Game();
+    
+    let animate =  () => {
+        game.renderGame();
+        requestAnimationFrame(animate);
+    }
 
-    let board1 = new Skateboard({
-        context: canvas.getContext('2d'),
-        // image: boardImage
-    })
-
-    board1.renderBoard();
+    requestAnimationFrame(animate);
+    
 });
+
+
+
+
