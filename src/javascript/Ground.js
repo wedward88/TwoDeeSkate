@@ -24,27 +24,13 @@ class Ground {
 
         // Context Binds //
         this.render = this.render.bind(this);
-        this.handleMovement = this.handleMovement.bind(this);
+        this.update = this.update.bind(this);
         this.accelerate = this.accelerate.bind(this);
         
     }
 
-    
-
-    accelerate(n){
+    accelerate(n) {
         this.speedX += n;
-    }
-
-
-    handleMovement(e) {
-        
-        if (e.key === 'd'){
-            this.speedX += -1;
-            this.accelerate(-3);
-        } else if (e.key === 'a') {
-            this.accelerate(3);
-            this.speedX += 1;
-        }
     }
 
     update () {

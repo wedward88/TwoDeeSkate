@@ -5,8 +5,7 @@ class Skateboard  {
         //Initialize World//
         this.ctx = options.ctx;
         this.canvas = options.canvas;
-        this.ground = options.ground;
-        this.groundLevel = this.ground.top;
+        
 
         //Dimensions//
         this.height = 10;
@@ -14,7 +13,7 @@ class Skateboard  {
 
         // Positioning //
         this.posX = (this.canvas.width - this.width) / 2;
-        this.posY = 400; //this.groundLevel - this.height;
+        this.posY = 400; 
 
         //Object Edges//
         this.bottom = this.posY - this.height;
