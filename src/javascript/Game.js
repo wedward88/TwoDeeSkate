@@ -14,11 +14,12 @@ class Game {
         this.renderGame = this.renderGame.bind(this);
         
     }
+    
 
 
     renderGame () {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.world.renderWorld();
+        this.world.render();
         
     }
 }
