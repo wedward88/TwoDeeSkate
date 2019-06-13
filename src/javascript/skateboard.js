@@ -1,58 +1,49 @@
 
+
 class Skateboard  {
     constructor(options) {
+        //Initialize World//
         this.ctx = options.ctx;
         this.canvas = options.canvas;
-        this.image = options.image;
+        this.ground = options.ground;
+        this.groundLevel = this.ground.top;
 
-        this.groundLevel = 600;
+        //Dimensions//
+        this.height = 10;
+        this.width = 150;
 
-        this.skateboardHeight = 10;
-        this.skateboardWidth = 150;
+        // Positioning //
+        this.posX = (this.canvas.width - this.width) / 2;
+        this.posY = 400; //this.groundLevel - this.height;
 
-        this.skateboardX = (this.canvas.width - this.skateboardWidth) / 2
-        this.skateboardY = this.groundLevel;
-        this.speedX = 0;
+        //Object Edges//
+        this.bottom = this.posY - this.height;
+        this.middle = this.width / 2;
+        this.top = this.posY;
+        this.leftEdge = this.posX;
+        this.rightEdge = this.posX + this.width;
+        
+        //Speed//
         this.speedY = 0;
 
+        //Gravity//
         this.gravity = .1;
         this.gravitySpeed = 0;
 
-        
+        //Key stroke//
         this.spacePressed = false;
 
-        
+        //Context binds//
         this.popBoard = this.popBoard.bind(this);
         this.landBoard = this.landBoard.bind(this);
-        this.hitGround = this.hitGround.bind(this);
-        this.renderBoard = this.renderBoard.bind(this);
-        this.boardGravity = this.boardGravity.bind(this);
+        this.render = this.render.bind(this);
         this.accelerate = this.accelerate.bind(this);
-
-        document.addEventListener('keydown', this.popBoard, false);
-        document.addEventListener('keyup', this.landBoard, false);
+        this.update = this.update.bind(this);
+        
     }
 
     accelerate(n) {
         this.gravity = n;
-    }
-
-    boardGravity ()  {
-        this.gravitySpeed += this.gravity;
-        this.skateboardY += this.speedY + this.gravitySpeed;
-
-        this.hitGround();
-    }
-
-    hitGround () {
-        
-        let groundLevel = this.groundLevel;
-
-        if (this.skateboardY > groundLevel) {
-            this.skateboardY = groundLevel;
-            this.gravitySpeed = 0;
-        }
-
     }
 
 
@@ -67,25 +58,29 @@ class Skateboard  {
             this.spacePressed = false;
         }
     }
+
+    update () {
+        this.bottom = this.posY + this.height;
+        this.middle = this.width / 2;
+        this.top = this.posY;
+        this.leftEdge = this.posX;
+        this.rightEdge = this.posX + this.width;
+    }
     
-    renderBoard () {
-        this.boardGravity();
-        
+    render () {
+        this.update();
         if (this.spacePressed) {
-            if (this.skateboardY > 520) {
-            this.accelerate(-1);
+            if (this.posY > 520) {
+                this.accelerate(-1);
             } else {
                 this.spacePressed = false;
             }
-
         } else if (!this.spacePressed) {
-             
             this.accelerate(0.4);
-         
         }
         
         this.ctx.beginPath();
-        this.ctx.rect(this.skateboardX, this.skateboardY, this.skateboardWidth, this.skateboardHeight);
+        this.ctx.rect(this.posX, this.posY, this.width, this.height);
         this.ctx.fillStyle = "#FF0000";
         this.ctx.fill();
         this.ctx.closePath();

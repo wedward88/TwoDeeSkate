@@ -14,6 +14,7 @@ class Game {
         this.renderGame = this.renderGame.bind(this);
         
     }
+    
 
 
     renderGame () {
