@@ -67,7 +67,7 @@ class World {
         this.level.forEach((ground)=>{
             this.boardGravity(ground);
             this.hitGround(ground);
-            this.groundSpeed(ground)
+            this.groundSpeed(ground);
             ground.render();
         })
     }
@@ -82,7 +82,9 @@ class World {
             } else if (e.key === 'a') {
                 ground.accelerate(3);
                 ground.speedX += 1;
+
             }
+
             
         });
     }
