@@ -11,14 +11,14 @@ class Ground {
         this.keyMap = options.keyMap;
 
         //Dimensions//
-        this.width = 2000;
+        this.width = 4000;
         this.height = 500;
 
         // Positioning //
-        this.posX = this.gap + (this.width * this.platformNo)
+        this.posX = 0;
         
         // Physics //
-        this.friction = .95;
+        this.friction = .98;
         this.speedX = 0;
         
 
@@ -31,22 +31,34 @@ class Ground {
         this.render = this.render.bind(this);
         this.update = this.update.bind(this);
         this.accelerate = this.accelerate.bind(this);
-        this.movement = this.movement.bind(this);
         this.boardGravity = this.boardGravity.bind(this);
         this.hitGround = this.hitGround.bind(this);
         this.groundSpeed = this.groundSpeed.bind(this);
 
-        document.addEventListener('keydown', this.movement, false);
+        // document.addEventListener('keydown', this.movement, false);
         // document.addEventListener('keydown', this.movement, false);
         
         
     }
 
     accelerate(n) {
-        this.speedX += n;
+        if (this.speedX > -10 && this.speedX < 10) {
+            this.speedX += n;
+        }
     }
 
     update () {
+
+        if (this.keyMap[68]) {
+            this.accelerate(-.4);
+            this.speedX += -.1;
+
+        } else if (this.keyMap[65]) {
+            this.accelerate(.4);
+            this.speedX += .1;
+
+        } 
+
         this.leftEdge = this.posX;
         this.rightEdge = this.posX + this.width;
         this.groundSpeed();
@@ -54,18 +66,6 @@ class Ground {
 
     }
 
-    movement (e) {
-        
-        if (e.key === 'd') {
-            this.speedX += -1;
-            this.accelerate(-3);
-            
-        } else if (e.key === 'a') {
-            this.accelerate(3);
-            this.speedX += 1;
-            
-        } 
-    }
 
     boardGravity() {
         this.skateboard.gravitySpeed += this.skateboard.gravity;

@@ -16,17 +16,20 @@ class World {
         
         });
 
-        this.level = []
-        this.initializeLevel();
-        
+        this.level = new Ground({
+            ctx: this.ctx,
+            canvas: this.canvas,
+            skateboard: this.skateboard,
+            keyMap: this.keyMap
+        });
+  
         
         this.handleKeyMap = (e) => {
             this.keyMap[e.keyCode] = e.type == 'keydown';
-            console.log(e);
         }
         
         // Context Binds //
-        this.initializeLevel = this.initializeLevel.bind(this);
+        // this.initializeLevel = this.initializeLevel.bind(this);
         
 
         // Event Listeners //
@@ -35,33 +38,10 @@ class World {
         // document.addEventListener('keypress', this.skateboard.landBoard, false);
             
     }
-
-    initializeLevel () {
-        let initialX = 0;
-        
-        for (let i = 0; i < 5; i++) {
-
-            this.level.push(new Ground({
-                ctx: this.ctx,
-                canvas: this.canvas,
-                skateboard: this.skateboard,
-                mindTheGap: initialX,
-                platformNo: i,
-                keyMap: this.keyMap
-            }));
-            
-            initialX += 200;
-        }
-    }
-
-   
+ 
 
     render () {
-        this.level.forEach((ground) => {
-            ground.render();
-        })
-        // this.levelRender();
-        
+        this.level.render();
         this.skateboard.render();
     
     }

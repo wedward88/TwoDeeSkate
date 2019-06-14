@@ -71,9 +71,12 @@ class Skateboard  {
     
     render () {
         this.update();
-        debugger
-        if (this.keyMap) {
-            if (this.posY > 520) {
+        
+        if (this.keyMap[32]) {
+            if (this.posY < 520) {
+                this.keyMap[32] = false
+            } else {
+                // this.speedY = 2;
                 this.accelerate(-1);
             }
         } else {
