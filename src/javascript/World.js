@@ -8,21 +8,20 @@ class World {
         /////////////////////
         this.ctx = options.ctx;
         this.canvas = options.canvas;
-        this.keyMap = {};
         this.skateboard = new Skateboard({
             ctx: this.ctx,
             canvas: this.canvas,
+            handleKeyMap: this.handleKeyMap,
             keyMap: this.keyMap
-        
         });
 
         this.level = []
         this.initializeLevel();
         
-        
+        this.keyMap = {};
         this.handleKeyMap = (e) => {
-            this.keyMap[e.keyCode] = e.type == 'keydown';
-            console.log(e);
+            this.keyMap[e.key] = e.type == 'keydown';
+            
         }
         
         // Context Binds //
@@ -30,8 +29,7 @@ class World {
         
 
         // Event Listeners //
-        document.addEventListener('keydown', this.handleKeyMap, false);
-        document.addEventListener('keyup', this.handleKeyMap, false);
+        document.addEventListener('keydown', this.skateboard.popBoard, this.handleKeyMap, false);
         // document.addEventListener('keypress', this.skateboard.landBoard, false);
             
     }
@@ -39,7 +37,7 @@ class World {
     initializeLevel () {
         let initialX = 0;
         
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 3; i++) {
 
             this.level.push(new Ground({
                 ctx: this.ctx,
@@ -47,6 +45,7 @@ class World {
                 skateboard: this.skateboard,
                 mindTheGap: initialX,
                 platformNo: i,
+                handleKeyMap: this.handleKeyMap,
                 keyMap: this.keyMap
             }));
             
