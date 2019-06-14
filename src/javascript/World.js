@@ -9,31 +9,35 @@ class World {
         this.ctx = options.ctx;
         this.canvas = options.canvas;
 
+        this.skateboard = new Skateboard({
+            ctx: this.ctx,
+            canvas: this.canvas
+        });
+
         this.level = [
             new Ground({
                 ctx: this.ctx,
                 canvas: this.canvas,
+                skateboard: this.skateboard
             }),
 
             new Ground({
                 ctx: this.ctx,
                 canvas: this.canvas,
+                skateboard: this.skateboard
             }),
 
             new Ground({
                 ctx: this.ctx,
                 canvas: this.canvas,
+                skateboard: this.skateboard
             })
         ]
         this.initializeLevel();
         
         
 
-        this.skateboard = new Skateboard({
-            ctx: this.ctx,
-            canvas: this.canvas,
-            level: this.level
-        })
+        
         
         // Context Binds //
         this.initializeLevel = this.initializeLevel.bind(this);
@@ -51,6 +55,14 @@ class World {
 
     
         
+    }
+
+    resetSkateboard () {
+        this.skateboard = new Skateboard({
+            ctx: this.ctx,
+            canvas: this.canvas,
+            level: this.level
+        });
     }
 
     initializeLevel () {
@@ -99,19 +111,25 @@ class World {
 
     hitGround(ground) {
         //if the board is over an object, then check to see if the board is hitting the 'ground'
-        if (this.skateboard.rightEdge > ground.leftEdge && this.skateboard.leftEdge < ground.rightEdge)  {
-            let groundLevel = ground.top - this.skateboard.height;
+        let onGround = (this.skateboard.rightEdge > ground.leftEdge) && (this.skateboard.leftEdge < ground.rightEdge)
+        let groundLevel = ground.top - this.skateboard.height;
 
+        if (onGround)  {
             if (this.skateboard.posY > groundLevel) {
                 this.skateboard.posY = groundLevel;
                 this.skateboard.gravitySpeed = 0;
                 
             }
         }
+        // } else if ((!onGround) && (this.skateboard.posY > groundLevel) ) {
+        //     ground.speedX = 0;
+            
+        // }
     }
 
     groundSpeed(ground) {
         // If the bottom of the board is higher than the surface of the ground, then don't apply friction
+        
         if (this.skateboard.bottom === ground.top) {
             ground.speedX *= ground.friction;
             ground.posX += ground.speedX;
