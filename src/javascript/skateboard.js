@@ -5,8 +5,8 @@ class Skateboard  {
         //Initialize World//
         this.ctx = options.ctx;
         this.canvas = options.canvas;
+        this.keyMap = options.keyMap;
         
-
         //Dimensions//
         this.height = 10;
         this.width = 150;
@@ -34,10 +34,11 @@ class Skateboard  {
 
         //Context binds//
         this.popBoard = this.popBoard.bind(this);
-        this.landBoard = this.landBoard.bind(this);
+        // this.landBoard = this.landBoard.bind(this);
         this.render = this.render.bind(this);
         this.accelerate = this.accelerate.bind(this);
         this.update = this.update.bind(this);
+        this.render = this.render.bind(this);
         
     }
 
@@ -47,16 +48,18 @@ class Skateboard  {
 
 
     popBoard (e) {
+        
         if (e.key == " ") {
             this.spacePressed = true;
         }
+    
     }
 
-    landBoard (e) {
-        if (e.key == " "){
-            this.spacePressed = false;
-        }
-    }
+    // landBoard (e) {
+    //     if (e.key == " "){
+    //         this.spacePressed = false;
+    //     }
+    // }
 
     update () {
         this.bottom = this.posY + this.height;
@@ -68,13 +71,15 @@ class Skateboard  {
     
     render () {
         this.update();
-        if (this.spacePressed) {
-            if (this.posY > 520) {
-                this.accelerate(-1);
+        
+        if (this.keyMap[32]) {
+            if (this.posY < 520) {
+                this.keyMap[32] = false
             } else {
-                this.spacePressed = false;
+                // this.speedY = 2;
+                this.accelerate(-1);
             }
-        } else if (!this.spacePressed) {
+        } else {
             this.accelerate(0.4);
         }
         
@@ -83,7 +88,8 @@ class Skateboard  {
         this.ctx.fillStyle = "#FF0000";
         this.ctx.fill();
         this.ctx.closePath();
-
+        
+        // console.log(this.posY);
 
     }
 }
