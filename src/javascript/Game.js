@@ -3,7 +3,7 @@ import World from './World';
 
 
 class Game {
-    constructor() {
+    constructor(options) {
         this.canvas = document.getElementById('skateCanvas');
         this.ctx = this.canvas.getContext('2d');
         
