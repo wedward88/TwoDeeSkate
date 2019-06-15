@@ -9,9 +9,12 @@ class Ground {
         this.platformNo = options.platformNo;
         this.handleKeyMap = options.handleKeyMap;
         this.keyMap = options.keyMap;
+        this.currentObstacle = options.currentObstacle;
+        this.reset = options.reset;
+        this.resetInvoked = false
 
         //Dimensions//
-        this.width = 4000;
+        this.width = 10000;
         this.height = 500;
 
         // Positioning //
@@ -34,6 +37,7 @@ class Ground {
         this.boardGravity = this.boardGravity.bind(this);
         this.hitGround = this.hitGround.bind(this);
         this.groundSpeed = this.groundSpeed.bind(this);
+        this.resetBoard = this.resetBoard.bind(this);
 
         // document.addEventListener('keydown', this.movement, false);
         // document.addEventListener('keydown', this.movement, false);
@@ -44,6 +48,7 @@ class Ground {
     accelerate(n) {
         if (this.speedX > -10 && this.speedX < 10) {
             this.speedX += n;
+            console.log(this.speedX);
         }
     }
 
@@ -52,11 +57,14 @@ class Ground {
         if (this.keyMap[68]) {
             this.accelerate(-.4);
             this.speedX += -.1;
-
         } else if (this.keyMap[65]) {
-            this.accelerate(.4);
-            this.speedX += .1;
-
+            if (this.posX < 197) {
+                this.accelerate(.4);
+                this.speedX += .1;
+            } else {
+                // this.accelerate(.4);
+                this.speedX = 0;
+            }
         } 
 
         this.leftEdge = this.posX;
@@ -75,8 +83,9 @@ class Ground {
     }
 
     hitGround() {
+        let onGround = !(this.skateboard.leftEdge > this.currentObstacle.leftEdge && this.skateboard.rightEdge < this.currentObstacle.rightEdge)
         //if the board is over an object, then check to see if the board is hitting the 'ground'
-        if (this.skateboard.rightEdge > this.leftEdge && this.skateboard.leftEdge < this.rightEdge) {
+        if (onGround) {
             let groundLevel = this.top - this.skateboard.height;
 
             if (this.skateboard.posY > groundLevel) {
@@ -84,8 +93,27 @@ class Ground {
                 this.skateboard.gravitySpeed = 0;
 
             }
+        } else if (!onGround && (this.skateboard.posY > 600)) {
+                
+                this.speedX = 0;
+                if(!this.resetInvoked){
+                    setTimeout(this.resetBoard, 1500);
+                    this.resetInvoked = true;
+                }
+                
         }
     }
+
+    resetBoard () {
+        this.skateboard.posY = 600;
+        this.skateboard.posX = -500;
+        this.reset();
+       
+    }
+
+    
+
+    
 
     groundSpeed() {
         // debugger
@@ -94,8 +122,12 @@ class Ground {
             // debugger
             this.speedX *= this.friction;
             this.posX += this.speedX;
+            this.currentObstacle.posX += this.speedX;
+            
         } else {
             this.posX += this.speedX;
+            this.currentObstacle.posX += this.speedX;
+            
         }
     }
 

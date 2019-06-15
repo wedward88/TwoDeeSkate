@@ -12,7 +12,7 @@ class Skateboard  {
         this.width = 150;
 
         // Positioning //
-        this.posX = (this.canvas.width - this.width) / 2;
+        this.posX = 200;
         this.posY = 400; 
 
         //Object Edges//
@@ -29,12 +29,9 @@ class Skateboard  {
         this.gravity = .1;
         this.gravitySpeed = 0;
 
-        //Key stroke//
-        this.spacePressed = false;
 
         //Context binds//
-        this.popBoard = this.popBoard.bind(this);
-        // this.landBoard = this.landBoard.bind(this);
+        
         this.render = this.render.bind(this);
         this.accelerate = this.accelerate.bind(this);
         this.update = this.update.bind(this);
@@ -47,20 +44,7 @@ class Skateboard  {
     }
 
 
-    popBoard (e) {
-        
-        if (e.key == " ") {
-            this.spacePressed = true;
-        }
-    
-    }
-
-    // landBoard (e) {
-    //     if (e.key == " "){
-    //         this.spacePressed = false;
-    //     }
-    // }
-
+   
     update () {
         this.bottom = this.posY + this.height;
         this.middle = this.width / 2;
@@ -73,7 +57,7 @@ class Skateboard  {
         this.update();
         
         if (this.keyMap[32]) {
-            if (this.posY < 520) {
+            if (this.posY < 550) {
                 this.keyMap[32] = false
             } else {
                 // this.speedY = 2;

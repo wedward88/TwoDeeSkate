@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
         requestAnimationFrame(animate);
     }
 
+
     requestAnimationFrame(animate);
     
 });
