@@ -1,9 +1,10 @@
 class Gap {
     constructor(options){
+        this.type = 'gap';
         this.ctx = options.ctx;
         this.canvas = options.canvas;
         this.posX = options.posX;
-        this.posY = options.posY;
+        this.posY = 600;
 
         //Dimensions
         this.width = 500;
@@ -20,6 +21,7 @@ class Gap {
     }
 
     render () {
+        
         this.update();
         this.ctx.beginPath();
         this.ctx.rect(this.posX, this.posY, this.width, this.height);

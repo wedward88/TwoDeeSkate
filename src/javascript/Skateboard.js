@@ -7,7 +7,7 @@ class Skateboard  {
         this.canvas = options.canvas;
         this.keyMap = options.keyMap;
         this.currentGround = options.currentGround;
-        this.currentObstacle = options.currentObstacle;
+        this.currentObstacle = this.currentGround.currentObstacle;
         this.level = options.level;
         
         //Dimensions//
@@ -62,7 +62,7 @@ class Skateboard  {
     groundCheck() {
         let onGround;
         let otherGround = this.level[1]
-        if (this.currentObstacle){
+        if (this.currentObstacle.type = 'gap'){
             onGround = !(this.leftEdge > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge)
         } else {
             onGround = (this.leftEdge > this.currentGround.leftEdge && this.rightEdge < this.currentGround.rightEdge) ||
@@ -79,7 +79,7 @@ class Skateboard  {
                 this.gravitySpeed = 0;
             }
         } else if (!onGround && (this.posY > 600)) {
-            debugger
+            // debugger
             this.currentGround.speedX = 0;
             if (!this.currentGround.resetInvoked) {
                 setTimeout(this.currentGround.resetBoard, 1500);
@@ -102,14 +102,14 @@ class Skateboard  {
             this.level[1].speedX = this.currentGround.speedX;
             this.level[1].posX += this.level[1].speedX;
             // this.level[1].posX += this.currentGround.speedX;
-            // this.currentObstacle.posX += this.currentGround.speedX;
+            this.currentObstacle.posX += this.currentGround.speedX;
             
         } else {
             this.currentGround.posX += this.currentGround.speedX;
             this.level[1].speedX = this.currentGround.speedX;
             this.level[1].posX += this.level[1].speedX;
             // this.level[1].posX += this.currentGround.speedX;
-            // this.currentObstacle.posX += this.currentGround.speedX;
+            this.currentObstacle.posX += this.currentGround.speedX;
 
         }
     }
@@ -122,6 +122,7 @@ class Skateboard  {
         this.top = this.posY;
         this.leftEdge = this.posX;
         this.rightEdge = this.posX + this.width;
+        this.currentObstacle = this.currentGround.currentObstacle;
 
         this.groundSpeed();
         this.boardGravity();

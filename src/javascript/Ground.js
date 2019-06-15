@@ -1,3 +1,5 @@
+
+
 class Ground {
     constructor(options) {
 
@@ -11,6 +13,10 @@ class Ground {
         this.color = options.color;
         this.resetInvoked = false;
         this.startPos = options.startPos;
+        this.currentObstacle = options.currentObstacle || null;
+        this.currentObstaclePosX = null;
+        
+        // debugger
 
         //Dimensions//
         this.width = this.canvas.width * 2;
@@ -67,6 +73,7 @@ class Ground {
         this.reset();
     }
 
+
     render() {
         
         this.update();
@@ -75,6 +82,8 @@ class Ground {
         this.ctx.fillStyle = this.color;
         this.ctx.fill();
         this.ctx.closePath();
+        // debugger
+        this.currentObstacle.render();
     }
 }
 

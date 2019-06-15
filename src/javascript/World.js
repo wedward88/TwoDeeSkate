@@ -1,6 +1,6 @@
 import Skateboard from './Skateboard';
 import Ground from './Ground';
-import Gap from './obstacles/Gap';
+import generateRandomObstacle from './obstacles/ObstacleGenerator';
 
 class World {
     constructor(options) {
@@ -16,6 +16,7 @@ class World {
         this.level = null;
         
         this.gap = null;
+        this.generateRandomObstacle = generateRandomObstacle;
         
         this.load();
         this.currentGround = this.level[0];
@@ -53,7 +54,12 @@ class World {
                 reset: this.reset,
                 color: "#a8ada6",
                 startPos: 0,
-                index: 0
+                index: 0,
+                currentObstacle: this.generateRandomObstacle({
+                    ctx: this.ctx,
+                    canvas: this.canvas,
+                    posX: 800
+                })
             }),
             new Ground({
                 ctx: this.ctx,
@@ -63,7 +69,12 @@ class World {
                 reset: this.reset,
                 color: "black",
                 startPos: this.canvas.width * 2,
-                index: 1
+                index: 1,
+                currentObstacle: this.generateRandomObstacle({
+                    ctx: this.ctx,
+                    canvas: this.canvas,
+                    posX: (this.canvas.width * 2) + 500
+                })
             })
         ]
 
@@ -73,23 +84,31 @@ class World {
             keyMap: this.keyMap,
             level: this.level,
             currentGround: this.level[0],
-            currentObstacle: undefined
         });
-
+        debugger
         
     }
 
     update () {
+        // console.log(this.currentGround.color)
         // this.currentGround = this.level[0]
         // console.log(this.currentGround.posX)
         // console.log(this.currentGround.rightEdge)
         if (this.currentGround.rightEdge < 0 ) {
+            // debugger
             this.level.push(this.level.shift());
+            // this.currentGround.currentObstacle = null;
             this.currentGround = this.level[0];
+            // debugger
             this.level[0].posX = 0
             this.level[1].posX = this.canvas.width * 2
+            this.level[1].currentObstacle = this.generateRandomObstacle({
+                ctx: this.ctx,
+                canvas: this.canvas,
+                posX: this.level[1].posX + 1000
+            });
             this.skateboard.currentGround = this.level[0];
-
+            console.log(this.currentGround.currentObstacle);
         }
         
     }
@@ -100,7 +119,7 @@ class World {
         for (let i = 0; i < this.level.length; i++) {
             this.level[i].render();
         }
-
+        
         // this.gap.render();
         this.skateboard.render();
     }

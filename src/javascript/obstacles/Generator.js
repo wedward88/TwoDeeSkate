@@ -1,7 +1,0 @@
-class Generator {
-    constructor(options){
-
-    }
-
-    
-}
