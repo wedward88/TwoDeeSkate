@@ -9,7 +9,8 @@ class World {
         /////////////////////
         this.ctx = options.ctx;
         this.canvas = options.canvas;
-        this.reset = options.reset
+        this.reset = options.reset;
+        this.updateScore = options.updateScore;
         this.keyMap = {};
         this.skateboard = null;
         this.ground = null;
@@ -83,7 +84,7 @@ class World {
             canvas: this.canvas,
             keyMap: this.keyMap,
             level: this.level,
-            currentGround: this.level[0],
+            currentGround: this.level[0]
         });
         // debugger
         
@@ -96,6 +97,7 @@ class World {
         // console.log(this.currentGround.rightEdge)
         if (this.currentGround.rightEdge < 0 ) {
             // debugger
+            this.updateScore();
             this.level.push(this.level.shift());
             // this.currentGround.currentObstacle = null;
             this.currentGround = this.level[0];

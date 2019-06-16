@@ -11,6 +11,7 @@ class Game {
         this.updateState = this.updateState.bind(this);
         this.renderGame = this.renderGame.bind(this);
         this.resetGame = this.resetGame.bind(this);
+        this.updateScore = this.updateScore.bind(this);
 
         this.world = new World({
             canvas: this.canvas,
@@ -19,7 +20,8 @@ class Game {
         });
 
         this.state = {
-            reset: false
+            reset: false,
+            score: 0
         }
         
     }
@@ -30,13 +32,24 @@ class Game {
         this.world = new World({
             canvas: this.canvas,
             ctx: this.ctx,
-            reset: this.updateState
+            reset: this.updateState,
+            updateScore: this.updateScore
         });
     }
 
     updateState() {
-       
+        this.state.score = 0;
         this.state.reset = true;
+
+    }
+
+    updateScore () {
+        this.state.score += 1
+    }
+
+    drawScore () {
+        this.ctx.font = '30px Arial'
+        this.ctx.fillText(`Score: ${this.state.score}`, 1000, 100)
     }
     
 
@@ -47,9 +60,12 @@ class Game {
             this.state.reset = false;
             this.resetGame();
         }
-            this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-            this.world.render();
         
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.drawScore();
+        this.world.render();
+        
+    
     }
 }
 

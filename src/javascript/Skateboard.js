@@ -86,7 +86,7 @@ class Skateboard  {
                               (this.leftEdge > this.currentObstacle.leftEdge && this.leftEdge < this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.posY) ||
                               (this.leftEdge < this.currentObstacle.leftEdge && this.rightEdge > this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.posY)
 
-                debugger
+                // debugger
                 if (inTrash) {
                     console.log(' YOURE TRASH !!!!! ')
                     
