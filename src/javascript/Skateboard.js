@@ -103,6 +103,7 @@ class Skateboard  {
             this.level[1].posX += this.level[1].speedX;
             // this.level[1].posX += this.currentGround.speedX;
             this.currentObstacle.posX += this.currentGround.speedX;
+            this.level[1].currentObstacle.posX += this.level[1].speedX;
             
         } else {
             this.currentGround.posX += this.currentGround.speedX;
@@ -110,6 +111,7 @@ class Skateboard  {
             this.level[1].posX += this.level[1].speedX;
             // this.level[1].posX += this.currentGround.speedX;
             this.currentObstacle.posX += this.currentGround.speedX;
+            this.level[1].currentObstacle.posX += this.level[1].speedX;
 
         }
     }
