@@ -9,8 +9,16 @@ class Skateboard  {
         this.currentGround = options.currentGround;
         this.currentObstacle = this.currentGround.currentObstacle;
         this.level = options.level;
+        this.didFall = false;
+        
+        
 
         // images //
+        this.tickCount = 0;
+        this.frameIndex = 0;
+        this.ticksPerFrame = 7;
+        this.frameNo = 1;
+
         this.board1 = new Image();
         this.board2 = new Image();
         this.board3 = new Image();
@@ -18,14 +26,17 @@ class Skateboard  {
         this.board5 = new Image();
 
         this.board1.src = './src/skateAssets/board1.png';
-        // this.board2.src = '../skateAssets/board1.png';
-        // this.board3.src = '../skateAssets/board1.png';
-        // this.board4.src = '../skateAssets/board1.png';
-        // this.board5.src = '../skateAssets/board1.png';
+        this.board2.src = './src/skateAssets/board2.png';
+        this.board3.src = './src/skateAssets/board3.png';
+        this.board4.src = './src/skateAssets/board4.png';
+        this.board5.src = './src/skateAssets/board5.png';
+
+        this.currentBoardFrame = this.board1;
         
         //Dimensions//
         this.height = 40;
         this.width = 150;
+        this.groundLevel = this.currentGround.top - this.height;
 
         // Positioning //
         this.posX = 200;
@@ -49,10 +60,10 @@ class Skateboard  {
         //Context binds//
         
         this.render = this.render.bind(this);
+        this.animateBoard = this.animateBoard.bind(this);
         this.gravityAccelerate = this.gravityAccelerate.bind(this);
         this.update = this.update.bind(this);
         this.render = this.render.bind(this);
-        
         this.boardGravity = this.boardGravity.bind(this);
         this.collisionCheck = this.collisionCheck.bind(this);
         this.groundSpeed = this.groundSpeed.bind(this);
@@ -73,36 +84,36 @@ class Skateboard  {
     }
 
     collisionCheck() {
-        let onGround;
+        let overGround;
         let otherGround = this.level[1]
 
         
 
         if (this.currentObstacle.type === 'gap'){
-            onGround = !(this.leftEdge > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge)
+            overGround = !(this.leftEdge > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge)
         } else {
-            onGround = (this.leftEdge > this.currentGround.leftEdge && this.rightEdge < this.currentGround.rightEdge) ||
+            overGround = (this.leftEdge > this.currentGround.leftEdge && this.rightEdge < this.currentGround.rightEdge) ||
                        (this.leftEdge > otherGround.leftEdge && this.rightEdge < otherGround.rightEdge) ||
                        (this.leftEdge < this.currentGround.rightEdge && this.rightEdge > otherGround.leftEdge) ||
                        (this.leftEdge < otherGround.leftEdge && this.rightEdge < this.currentGround.rightEdge)
         }
             //if the board is over an object, then check to see if the board is hitting the 'ground'
-        if (onGround) {
-            
-            let groundLevel = this.currentGround.top - this.height;
-            if (this.posY > groundLevel) {
-                this.posY = groundLevel;
-                this.gravitySpeed = 0;
-            } else if (this.currentObstacle.type === 'trash') {
-                
-                let inTrash = (this.rightEdge > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.posY) ||
-                              (this.leftEdge > this.currentObstacle.leftEdge && this.leftEdge < this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.posY) ||
-                              (this.leftEdge < this.currentObstacle.leftEdge && this.rightEdge > this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.posY)
+        if (overGround) {
 
-                // debugger
-                if (inTrash) {
-                    console.log(' YOURE TRASH !!!!! ')
-                    
+            let inObstacle = (this.rightEdge > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.posY) ||
+                (this.rightEdge > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge && this.posY > this.groundLevel) ||
+                (this.leftEdge > this.currentObstacle.leftEdge && this.leftEdge < this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.posY) ||
+                (this.leftEdge < this.currentObstacle.leftEdge && this.rightEdge > this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.posY)
+            
+            if ((this.posY > this.groundLevel) && !inObstacle) {
+                this.posY = this.groundLevel;
+                this.gravitySpeed = 0;
+                
+            } else if (this.currentObstacle.type === 'notGap') {
+                
+                if (inObstacle) {
+                    console.log(' YOURE TRASH !!!!! (get it) ')
+                    this.didFall = true;
                     this.currentGround.speedX = 0;
                     if (!this.currentGround.resetInvoked) {
                         setTimeout(this.currentGround.resetBoard, 1500);
@@ -111,8 +122,9 @@ class Skateboard  {
 
                 }
             }
-        } else if (!onGround && (this.posY > 600)) {
+        } else if (!overGround && (this.posY > 600)) {
             // debugger
+            this.didFall = true;
             this.currentGround.speedX = 0;
             if (!this.currentGround.resetInvoked) {
                 setTimeout(this.currentGround.resetBoard, 1500);
@@ -139,6 +151,7 @@ class Skateboard  {
             this.level[1].currentObstacle.posX += this.level[1].speedX;
             
         } else {
+            this.currentGround.speedX *= .995;
             this.currentGround.posX += this.currentGround.speedX;
             this.level[1].speedX = this.currentGround.speedX;
             this.level[1].posX += this.level[1].speedX;
@@ -147,6 +160,37 @@ class Skateboard  {
             this.level[1].currentObstacle.posX += this.level[1].speedX;
 
         }
+    }
+
+    animateBoard () {
+        this.tickCount += 1;
+        
+        if (this.tickCount > this.ticksPerFrame) {
+            this.tickCount = 0;
+            
+            if (this.frameNo < 5) {
+                this.frameNo += 1;
+                console.log(this.frameNo);
+            } else {
+                this.frameNo = 1;
+            }
+        }
+
+        let boardVal;
+
+        if (this.frameNo === 1) {
+            boardVal = this.board1;
+        } else if (this.frameNo === 2) {
+            boardVal = this.board2;
+        } else if (this.frameNo === 3) {
+            boardVal = this.board3;
+        } else if (this.frameNo === 4) {
+            boardVal = this.board4;
+        } else if (this.frameNo === 5) {
+            boardVal = this.board5;
+        }
+
+        this.ctx.drawImage(boardVal, this.posX, this.posY, this.width, this.height)
     }
 
 
@@ -164,10 +208,10 @@ class Skateboard  {
     }
     
     render () {
-        this.update();
         
+        this.update();
         if (this.keyMap[32]) {
-            if (this.posY < 550) {
+            if (this.posY < 500) {
                 this.keyMap[32] = false
             } else {
                 // this.speedY = 2;
@@ -176,14 +220,25 @@ class Skateboard  {
         } else {
             this.gravityAccelerate(0.4);
         }
+
+
         
         // this.ctx.beginPath();
         // this.ctx.rect(this.posX, this.posY, this.width, this.height);
         // this.ctx.fillStyle = "#FF0000";
         // this.ctx.fill();
         // this.ctx.closePath();
+        // console.log(this.posY)
+        if (this.posY < 400) {
+            this.animateBoard();
+        } else if (!this.didFall) {
+            this.currentBoardFrame = this.board1;
+            this.ctx.drawImage(this.currentBoardFrame, this.posX, this.posY, this.width, this.height)
+        } else if (this.didFall) {
+            this.keyMap[68] = false;
+            this.ctx.drawImage(this.board3, this.posX, this.posY, this.width, this.height)
+        }
         
-        this.ctx.drawImage(this.board1, this.posX, this.posY, this.width, this.height)
         
         // console.log(this.posY);
 

@@ -46,16 +46,8 @@ class Ground {
     update () {
 
         if (this.keyMap[68]) {
-            this.speedAccelerate(-.4);
+            this.speedAccelerate(-.8);
             this.speedX += -.1;
-        } else if (this.keyMap[65]) {
-            if (this.posX < 197) {
-                this.speedAccelerate(.4);
-                this.speedX += .1;
-            } else {
-                // this.speedAccelerate(.4);
-                this.speedX = 0;
-            }
         } 
 
         this.leftEdge = this.posX;
@@ -64,7 +56,7 @@ class Ground {
     }
 
     speedAccelerate(n) {
-        if (this.speedX > -10 && this.speedX < 10) {
+        if (this.speedX > -7 && this.speedX < 7) {
             this.speedX += n;
         }
     }

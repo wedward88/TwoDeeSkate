@@ -1,14 +1,14 @@
 
 
-class Trash {
+class Hydrant {
     constructor(options) {
         this.type = 'notGap';
         this.ctx = options.ctx;
         this.canvas = options.canvas;
         this.posX = options.posX;
         this.posY = 475;
-        this.trash = new Image();
-        this.trash.src = './src/skateAssets/trash.png';
+        this.hydrant = new Image();
+        this.hydrant.src = './src/skateAssets/hydrant.png';
 
         //Dimensions
         this.width = 125;
@@ -19,13 +19,13 @@ class Trash {
         this.rightEdge = this.posX + this.width;
     }
 
-    update () {
+    update() {
         this.leftEdge = this.posX;
         this.rightEdge = this.posX + this.width;
     }
 
 
-    render () {
+    render() {
         this.update();
         // this.ctx.beginPath();
         // this.ctx.rect(this.posX, this.posY, this.width, this.height);
@@ -33,11 +33,11 @@ class Trash {
         // this.ctx.fill();
         // this.ctx.closePath();
         
-        this.ctx.drawImage(this.trash, this.posX, this.posY, this.width, this.height)
-       
-        
+        this.ctx.drawImage(this.hydrant, this.posX, this.posY, this.width, this.height)
+
+
     }
 
 }
 
-export default Trash;
+export default Hydrant;

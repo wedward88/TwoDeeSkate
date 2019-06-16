@@ -1,5 +1,7 @@
 ### Javascript-Project-Rename
 
+Fire hydrant and other obstacle icons made by Freepik from www.flaticon.com
+
 ## Background and Overview
 
 As an avid skateboarder, I thought it would be fun to create a skateboard game to strengthen my Javascript skills, and learn to use Canvas HTML to do so.

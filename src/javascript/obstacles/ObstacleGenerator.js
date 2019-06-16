@@ -1,5 +1,7 @@
 import Trash from './Trash';
 import Gap from './Gap';
+import Hydrant from './Hydrant';
+import Dumpster from './Dumpster';
 
 const generateRandomObstacle = (options) => {
     const posX = options.posX;
@@ -8,7 +10,9 @@ const generateRandomObstacle = (options) => {
 
     const obstacles = [
         Trash,
-        Gap
+        Gap,
+        Hydrant,
+        Dumpster
     ]
 
     const getRandomInt = (max) => {

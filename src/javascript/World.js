@@ -53,7 +53,7 @@ class World {
                 skateboard: this.skateboard,
                 keyMap: this.keyMap,
                 reset: this.reset,
-                color: "#a8ada6",
+                color: "#c7c7c7",
                 startPos: 0,
                 index: 0,
                 currentObstacle: this.generateRandomObstacle({
@@ -68,7 +68,7 @@ class World {
                 skateboard: this.skateboard,
                 keyMap: this.keyMap,
                 reset: this.reset,
-                color: "#a8ada6",
+                color: "#c7c7c7",
                 startPos: this.canvas.width * 2,
                 index: 1,
                 currentObstacle: this.generateRandomObstacle({
@@ -123,7 +123,10 @@ class World {
         }
         
         // this.gap.render();
+        this.ctx.shadowColor = 'black';
+        this.ctx.shadowBlur = 5;
         this.skateboard.render();
+        this.ctx.shadowBlur = 0;
     }
 }
 
