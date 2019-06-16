@@ -16,7 +16,8 @@ class Game {
         this.world = new World({
             canvas: this.canvas,
             ctx: this.ctx,
-            reset: this.updateState
+            reset: this.updateState,
+            updateScore: this.updateScore
         });
 
         this.state = {
