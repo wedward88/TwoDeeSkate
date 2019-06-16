@@ -9,9 +9,22 @@ class Skateboard  {
         this.currentGround = options.currentGround;
         this.currentObstacle = this.currentGround.currentObstacle;
         this.level = options.level;
+
+        // images //
+        this.board1 = new Image();
+        this.board2 = new Image();
+        this.board3 = new Image();
+        this.board4 = new Image();
+        this.board5 = new Image();
+
+        this.board1.src = './src/skateAssets/board1.png';
+        // this.board2.src = '../skateAssets/board1.png';
+        // this.board3.src = '../skateAssets/board1.png';
+        // this.board4.src = '../skateAssets/board1.png';
+        // this.board5.src = '../skateAssets/board1.png';
         
         //Dimensions//
-        this.height = 10;
+        this.height = 40;
         this.width = 150;
 
         // Positioning //
@@ -164,11 +177,13 @@ class Skateboard  {
             this.gravityAccelerate(0.4);
         }
         
-        this.ctx.beginPath();
-        this.ctx.rect(this.posX, this.posY, this.width, this.height);
-        this.ctx.fillStyle = "#FF0000";
-        this.ctx.fill();
-        this.ctx.closePath();
+        // this.ctx.beginPath();
+        // this.ctx.rect(this.posX, this.posY, this.width, this.height);
+        // this.ctx.fillStyle = "#FF0000";
+        // this.ctx.fill();
+        // this.ctx.closePath();
+        
+        this.ctx.drawImage(this.board1, this.posX, this.posY, this.width, this.height)
         
         // console.log(this.posY);
 
