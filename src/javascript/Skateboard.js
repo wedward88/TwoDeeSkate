@@ -41,7 +41,7 @@ class Skateboard  {
         this.render = this.render.bind(this);
         
         this.boardGravity = this.boardGravity.bind(this);
-        this.groundCheck = this.groundCheck.bind(this);
+        this.collisionCheck = this.collisionCheck.bind(this);
         this.groundSpeed = this.groundSpeed.bind(this);
         
     }
@@ -56,13 +56,16 @@ class Skateboard  {
         this.gravitySpeed += this.gravity;
         this.posY += this.speedY + this.gravitySpeed;
 
-        this.groundCheck();
+        this.collisionCheck();
     }
 
-    groundCheck() {
+    collisionCheck() {
         let onGround;
         let otherGround = this.level[1]
-        if (this.currentObstacle.type = 'gap'){
+
+        
+
+        if (this.currentObstacle.type === 'gap'){
             onGround = !(this.leftEdge > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge)
         } else {
             onGround = (this.leftEdge > this.currentGround.leftEdge && this.rightEdge < this.currentGround.rightEdge) ||
@@ -72,11 +75,28 @@ class Skateboard  {
         }
             //if the board is over an object, then check to see if the board is hitting the 'ground'
         if (onGround) {
-            // debugger
+            
             let groundLevel = this.currentGround.top - this.height;
             if (this.posY > groundLevel) {
                 this.posY = groundLevel;
                 this.gravitySpeed = 0;
+            } else if (this.currentObstacle.type === 'trash') {
+                
+                let inTrash = (this.rightEdge > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.posY) ||
+                              (this.leftEdge > this.currentObstacle.leftEdge && this.leftEdge < this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.posY) ||
+                              (this.leftEdge < this.currentObstacle.leftEdge && this.rightEdge > this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.posY)
+
+                debugger
+                if (inTrash) {
+                    console.log(' YOURE TRASH !!!!! ')
+                    
+                    this.currentGround.speedX = 0;
+                    if (!this.currentGround.resetInvoked) {
+                        setTimeout(this.currentGround.resetBoard, 1500);
+                        this.currentGround.resetInvoked = true;
+                    }
+
+                }
             }
         } else if (!onGround && (this.posY > 600)) {
             // debugger
@@ -85,7 +105,7 @@ class Skateboard  {
                 setTimeout(this.currentGround.resetBoard, 1500);
                 this.currentGround.resetInvoked = true;
             }
-        }
+        } 
     }
 
     

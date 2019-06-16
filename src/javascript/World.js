@@ -67,7 +67,7 @@ class World {
                 skateboard: this.skateboard,
                 keyMap: this.keyMap,
                 reset: this.reset,
-                color: "black",
+                color: "#a8ada6",
                 startPos: this.canvas.width * 2,
                 index: 1,
                 currentObstacle: this.generateRandomObstacle({
@@ -85,7 +85,7 @@ class World {
             level: this.level,
             currentGround: this.level[0],
         });
-        debugger
+        // debugger
         
     }
 
@@ -108,7 +108,7 @@ class World {
                 posX: this.level[1].posX + 1000
             });
             this.skateboard.currentGround = this.level[0];
-            console.log(this.currentGround.currentObstacle);
+            
         }
         
     }
