@@ -20,7 +20,7 @@ class Ground {
 
         //Dimensions//
         this.width = this.canvas.width * 2;
-        this.height = 500;
+        this.height = this.canvas.height * .25;
 
         // Positioning //
         this.posX = this.startPos;
