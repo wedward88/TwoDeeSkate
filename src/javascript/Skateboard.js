@@ -89,14 +89,14 @@ class Skateboard  {
 
         
 
-        if (this.currentObstacle.type === 'gap'){
-            overGround = !(this.leftEdge > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge)
-        } else {
+        // if (this.currentObstacle.type === 'gap'){
+        //     overGround = !(this.leftEdge > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge )
+        // } else {
             overGround = (this.leftEdge > this.currentGround.leftEdge && this.rightEdge < this.currentGround.rightEdge) ||
                        (this.leftEdge > otherGround.leftEdge && this.rightEdge < otherGround.rightEdge) ||
                        (this.leftEdge < this.currentGround.rightEdge && this.rightEdge > otherGround.leftEdge) ||
                        (this.leftEdge < otherGround.leftEdge && this.rightEdge < this.currentGround.rightEdge)
-        }
+        // }
             //if the board is over an object, then check to see if the board is hitting the 'ground'
         if (overGround) {
 
@@ -121,15 +121,25 @@ class Skateboard  {
                     }
 
                 }
+            } else if (this.currentObstacle.type === 'gap') {
+
+                if (inObstacle) {
+                    this.didFall = true;
+                    this.currentGround.speedX = 0;
+                    if (!this.currentGround.resetInvoked) {
+                        setTimeout(this.currentGround.resetBoard, 1500);
+                        this.currentGround.resetInvoked = true;
+                    }
+                }
             }
-        } else if (!overGround && (this.posY > 600)) {
-            // debugger
-            this.didFall = true;
-            this.currentGround.speedX = 0;
-            if (!this.currentGround.resetInvoked) {
-                setTimeout(this.currentGround.resetBoard, 1500);
-                this.currentGround.resetInvoked = true;
-            }
+        // } else if (!overGround && (this.posY > 600)) {
+        //     // debugger
+        //     this.didFall = true;
+        //     this.currentGround.speedX = 0;
+        //     if (!this.currentGround.resetInvoked) {
+        //         setTimeout(this.currentGround.resetBoard, 1500);
+        //         this.currentGround.resetInvoked = true;
+        //     }
         } 
     }
 
@@ -170,7 +180,6 @@ class Skateboard  {
             
             if (this.frameNo < 5) {
                 this.frameNo += 1;
-                console.log(this.frameNo);
             } else {
                 this.frameNo = 1;
             }

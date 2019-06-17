@@ -117,16 +117,18 @@ class World {
  
 
     render () {
+
         this.update();
+        
         for (let i = 0; i < this.level.length; i++) {
             this.level[i].render();
         }
-        
         // this.gap.render();
         this.ctx.shadowColor = 'black';
         this.ctx.shadowBlur = 5;
         this.skateboard.render();
         this.ctx.shadowBlur = 0;
+        
     }
 }
 

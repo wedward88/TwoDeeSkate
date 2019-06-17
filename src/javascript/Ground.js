@@ -15,6 +15,8 @@ class Ground {
         this.startPos = options.startPos;
         this.currentObstacle = options.currentObstacle || null;
         this.currentObstaclePosX = null;
+        this.streetLamp = new Image();
+        this.streetLamp.src = './src/skateAssets/streetLamp.png'
         
         // debugger
 
@@ -65,15 +67,24 @@ class Ground {
         this.reset();
     }
 
+    renderStreetLamps () {
+        this.ctx.drawImage(this.streetLamp, this.posX, 200, 325, 400)
+        this.ctx.drawImage(this.streetLamp, this.posX + 1650, 200, 325, 400) 
+    }
+
 
     render() {
         
         this.update();
+        
         this.ctx.beginPath();
         this.ctx.rect(this.posX, (this.top), this.width, this.height);
         this.ctx.fillStyle = this.color;
         this.ctx.fill();
         this.ctx.closePath();
+        
+        this.renderStreetLamps();
+        
         // debugger
         this.currentObstacle.render();
     }

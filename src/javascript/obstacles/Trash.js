@@ -32,9 +32,9 @@ class Trash {
         // this.ctx.fillStyle = "red";
         // this.ctx.fill();
         // this.ctx.closePath();
-        
+        this.ctx.shadowBlur = 5;
         this.ctx.drawImage(this.trash, this.posX, this.posY, this.width, this.height)
-       
+        this.ctx.shadowBlur = 0;
         
     }
 
