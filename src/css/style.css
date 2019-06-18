@@ -36,3 +36,46 @@ h1 {
     font-size: 60px;
     text-shadow: 5px 5px 5px black;
 }
+
+.start, .over {
+    
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    /* display: none; */
+}
+
+.start div, .over div {
+    
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    top: 25%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.start div {
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.how-to {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.over {
+    display: none;
+}

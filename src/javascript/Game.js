@@ -57,6 +57,13 @@ class Game {
             updateScore: this.updateScore,
             keyMap: this.keyMap
         });
+
+        this.background = new Background({
+            canvas: this.canvas,
+            ctx: this.ctx,
+            keyMap: this.keyMap
+
+        });
     }
 
     updateState() {
