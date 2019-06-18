@@ -8,22 +8,36 @@ class Game {
         this.ctx = this.canvas.getContext('2d');
         this.scoreBar = new Image();
         this.scoreBar.src = './src/skateAssets/scoreBar.png'
+        this.keyMap = {};
         
         this.updateState = this.updateState.bind(this);
         this.renderGame = this.renderGame.bind(this);
         this.resetGame = this.resetGame.bind(this);
         this.updateScore = this.updateScore.bind(this);
 
+        
+
+        this.handleKeyMap = (e) => {
+            this.keyMap[e.keyCode] = e.type == 'keydown';
+        }
+
+        // Event Listeners //
+        document.addEventListener('keydown', this.handleKeyMap, false);
+        document.addEventListener('keyup', this.handleKeyMap, false);
+
         this.world = new World({
             canvas: this.canvas,
             ctx: this.ctx,
             reset: this.updateState,
-            updateScore: this.updateScore
+            updateScore: this.updateScore,
+            keyMap: this.keyMap
         });
 
         this.background = new Background({
             canvas: this.canvas,
-            ctx: this.ctx
+            ctx: this.ctx,
+            keyMap: this.keyMap
+
         });
 
         this.state = {
@@ -40,7 +54,8 @@ class Game {
             canvas: this.canvas,
             ctx: this.ctx,
             reset: this.updateState,
-            updateScore: this.updateScore
+            updateScore: this.updateScore,
+            keyMap: this.keyMap
         });
     }
 

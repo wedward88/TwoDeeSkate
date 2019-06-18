@@ -11,7 +11,7 @@ class World {
         this.canvas = options.canvas;
         this.reset = options.reset;
         this.updateScore = options.updateScore;
-        this.keyMap = {};
+        this.keyMap = options.keyMap;
         this.skateboard = null;
         this.ground = null;
         this.level = null;
@@ -21,30 +21,17 @@ class World {
         
         this.load();
         this.currentGround = this.level[0];
-        this.handleKeyMap = (e) => {
-            this.keyMap[e.keyCode] = e.type == 'keydown';
-        }
+        
         
         // Context Binds //
         this.load = this.load.bind(this);
         this.update = this.update.bind(this);
 
-        // Event Listeners //
-        document.addEventListener('keydown', this.handleKeyMap, false);
-        document.addEventListener('keyup', this.handleKeyMap, false);
-        // document.addEventListener('keypress', this.skateboard.landBoard, false);
             
     }
 
     load () {
-        
-    
-        // this.gap = new Gap({
-        //     ctx: this.ctx,
-        //     canvas: this.canvas,
-        //     posX: 800,
-        //     posY: 600,
-        // });
+
 
         this.level = [
             new Ground({
@@ -91,10 +78,7 @@ class World {
     }
 
     update () {
-        // console.log(this.currentGround.color)
-        // this.currentGround = this.level[0]
-        // console.log(this.currentGround.posX)
-        // console.log(this.currentGround.rightEdge)
+        
         if (this.currentGround.rightEdge < 0 ) {
             // debugger
             this.updateScore();
@@ -107,7 +91,8 @@ class World {
             this.level[1].currentObstacle = this.generateRandomObstacle({
                 ctx: this.ctx,
                 canvas: this.canvas,
-                posX: this.level[1].posX + 1000
+                posX: this.level[1].posX + 1000,
+                keyMap: this.keyMap
             });
             this.skateboard.currentGround = this.level[0];
             

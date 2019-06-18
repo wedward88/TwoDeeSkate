@@ -7,7 +7,6 @@ class Ground {
         this.ctx = options.ctx;
         this.canvas = options.canvas;
         this.skateboard = options.skateboard;
-        this.handleKeyMap = options.handleKeyMap;
         this.keyMap = options.keyMap;
         this.reset = options.reset;
         this.color = options.color;
@@ -40,13 +39,14 @@ class Ground {
         // Context Binds //
         this.render = this.render.bind(this);
         this.update = this.update.bind(this);
+        this.update = this.update.bind(this);
         this.speedAccelerate = this.speedAccelerate.bind(this);
         this.resetBoard = this.resetBoard.bind(this);
 
     }
 
     update () {
-
+        
         if (this.keyMap[68]) {
             this.speedAccelerate(-.8);
             this.speedX += -.1;
