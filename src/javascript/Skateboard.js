@@ -84,34 +84,45 @@ class Skateboard  {
     }
 
     collisionCheck() {
-        let overGround;
-        let otherGround = this.level[1]
+        let overGap;
+    
 
         
 
-        // if (this.currentObstacle.type === 'gap'){
-        //     overGround = !(this.leftEdge > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge )
+        if (this.currentObstacle.type === 'gap'){
+        //     overGap = !(this.leftEdge > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge )
         // } else {
-            overGround = (this.leftEdge > this.currentGround.leftEdge && this.rightEdge < this.currentGround.rightEdge) ||
-                       (this.leftEdge > otherGround.leftEdge && this.rightEdge < otherGround.rightEdge) ||
-                       (this.leftEdge < this.currentGround.rightEdge && this.rightEdge > otherGround.leftEdge) ||
-                       (this.leftEdge < otherGround.leftEdge && this.rightEdge < this.currentGround.rightEdge)
-        // }
+            overGap = (this.leftEdge + 20 > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge + 40)
+        }
             //if the board is over an object, then check to see if the board is hitting the 'ground'
-        if (overGround) {
+   
+            let inObstacle;
+            if (this.currentObstacle.type === 'notGap') {
+                inObstacle = (this.rightEdge > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.top) ||
+                             (this.rightEdge > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge && this.top > this.groundLevel) ||
+                             (this.leftEdge > this.currentObstacle.leftEdge && this.leftEdge < this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.top) ||
+                             (this.leftEdge < this.currentObstacle.leftEdge && this.rightEdge > this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.top)
 
-            let inObstacle = (this.rightEdge > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.posY) ||
-                (this.rightEdge > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge && this.posY > this.groundLevel) ||
-                (this.leftEdge > this.currentObstacle.leftEdge && this.leftEdge < this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.posY) ||
-                (this.leftEdge < this.currentObstacle.leftEdge && this.rightEdge > this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.posY)
+            } else if (this.currentObstacle.type === 'gap') {
+                
+                inObstacle = (this.rightEdge > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.top) ||
+                             (this.leftEdge > this.currentObstacle.leftEdge && this.leftEdge < this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.top) ||
+                             (this.leftEdge < this.currentObstacle.leftEdge && this.rightEdge > this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.top) ||
+                             (this.bottom === this.currentObstacle.top && this.leftEdge > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge)
+
+            }
+
             
-            if ((this.posY > this.groundLevel) && !inObstacle) {
+            
+            if ((this.posY > this.groundLevel) && !overGap) {
                 this.posY = this.groundLevel;
                 this.gravitySpeed = 0;
-                
-            } else if (this.currentObstacle.type === 'notGap') {
+            } 
+
+            if (this.currentObstacle.type === 'notGap') {
                 
                 if (inObstacle) {
+                    this.keyMap[32] = false;
                     console.log(' YOURE TRASH !!!!! (get it) ')
                     this.didFall = true;
                     this.currentGround.speedX = 0;
@@ -122,9 +133,9 @@ class Skateboard  {
 
                 }
             } else if (this.currentObstacle.type === 'gap') {
-
+                    
                 if (inObstacle) {
-                    this.didFall = true;
+                    this.keyMap[68] = false;
                     this.currentGround.speedX = 0;
                     if (!this.currentGround.resetInvoked) {
                         setTimeout(this.currentGround.resetBoard, 1500);
@@ -140,7 +151,7 @@ class Skateboard  {
         //         setTimeout(this.currentGround.resetBoard, 1500);
         //         this.currentGround.resetInvoked = true;
         //     }
-        } 
+         
     }
 
     

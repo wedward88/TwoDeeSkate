@@ -15,6 +15,7 @@ class Hydrant {
         this.height = 125;
 
         //Edges
+        this.top = this.posY
         this.leftEdge = this.posX;
         this.rightEdge = this.posX + this.width;
     }

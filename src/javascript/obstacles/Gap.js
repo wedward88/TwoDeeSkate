@@ -13,6 +13,7 @@ class Gap {
         this.height = 200;
 
         //Edges
+        this.top = this.posY
         this.leftEdge = this.posX;
         this.rightEdge = this.posX + this.width;
     }
@@ -28,7 +29,7 @@ class Gap {
         this.update();
         this.ctx.drawImage(this.warning, this.posX - 300, this.posY - 200, 200, 200)
         this.ctx.beginPath();
-        let gradient = this.ctx.createLinearGradient(this.width / 2, 575, this.width / 2, this.posY + this.height);
+        let gradient = this.ctx.createLinearGradient(this.width / 2, this.posY - 20, this.width / 2, this.posY + 100);
         gradient.addColorStop(0, "#afafaf");
         gradient.addColorStop(1, "black");
         this.ctx.fillStyle = gradient;
