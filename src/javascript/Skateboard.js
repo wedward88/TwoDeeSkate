@@ -123,7 +123,6 @@ class Skateboard  {
                 
                 if (inObstacle) {
                     this.keyMap[32] = false;
-                    console.log(' YOURE TRASH !!!!! (get it) ')
                     this.didFall = true;
                     this.currentGround.speedX = 0;
                     if (!this.currentGround.resetInvoked) {

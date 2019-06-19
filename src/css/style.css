@@ -3,7 +3,7 @@ html {
 }
 
 body {
-    height: 100%;
+    height: 905px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -53,7 +53,7 @@ h1 {
     background-color: #98a3b8;
     border-radius: 10px;
     border: 15px solid #677281;
-    /* box-sizing: border-box; */
+    box-sizing: border-box;
     display: flex;
     position: absolute;
     width: 500px;
@@ -63,7 +63,7 @@ h1 {
     right: 0;
     margin-left: auto;
     margin-right: auto;
-    /* margin-top: -34px; */
+    
 }
 
 .over {
@@ -99,12 +99,13 @@ h1 {
     text-shadow: 5px 5px #89839b;
 }
 
-.start * {margin-top: -50px;}
+#start-menu-content {
+    /* padding-bottom: 130px; */
+}
 
 .start ul {
-    height: 100;
+    height: 75%;
     margin-left: 30px;
-    margin-top: 25px;
     justify-content: space-between;
     display: flex;
     flex-direction: column;
@@ -139,16 +140,23 @@ h1 {
     cursor: pointer;
 }
 
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    width: 260px;
+}
+
 
 .how-to {
-    height: 75%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
+    padding-top: 30px;
     text-align: center;
     font-family: 'Roboto', sans-serif;
-   
+    box-sizing: border-box;
 }
 
 .how-to h2 {
@@ -169,7 +177,7 @@ h1 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 75%;
+    /* height: 75%; */
 }
 
 #score {

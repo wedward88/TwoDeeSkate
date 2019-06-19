@@ -11,6 +11,7 @@ class Game {
         this.keyMap = {};
         this.startButton = document.getElementById('start-button');
         this.restartGameButton = document.getElementById('restart-button');
+        this.helpButton = document.getElementById('help-button');
         
         this.triggerReset = this.triggerReset.bind(this);
         this.renderGame = this.renderGame.bind(this);
@@ -28,6 +29,7 @@ class Game {
         document.addEventListener('keyup', this.handleKeyMap, false);
         this.startButton.addEventListener('click', this.startGame, false);
         this.restartGameButton.addEventListener('click', this.triggerReset, false);
+        this.helpButton.addEventListener('click', this.help, false);
         
         this.world = null;
 
@@ -49,13 +51,18 @@ class Game {
         document.getElementById('start-modal').classList.add("hidden");
         this.state.reset = true;
     }
-
+    
     gameOver () {
         let ul = document.getElementById('score');
         let score = document.createElement('li');
         score.appendChild(document.createTextNode(`${this.state.score}`));
         ul.appendChild(score);
         document.getElementById('game-over-modal').classList.remove("hidden");
+    }
+    
+    help () {
+        document.getElementById('game-over-modal').classList.add("hidden");
+        document.getElementById('start-modal').classList.remove("hidden");
     }
 
     resetGame () {
