@@ -9,13 +9,15 @@ class Game {
         this.scoreBar = new Image();
         this.scoreBar.src = './src/skateAssets/scoreBar.png'
         this.keyMap = {};
+        this.startButton = document.getElementById('start-button');
+        this.restartGameButton = document.getElementById('restart-button');
         
-        this.updateState = this.updateState.bind(this);
+        this.triggerReset = this.triggerReset.bind(this);
         this.renderGame = this.renderGame.bind(this);
         this.resetGame = this.resetGame.bind(this);
         this.updateScore = this.updateScore.bind(this);
-
-        
+        this.startGame = this.startGame.bind(this);
+        this.gameOver = this.gameOver.bind(this);
 
         this.handleKeyMap = (e) => {
             this.keyMap[e.keyCode] = e.type == 'keydown';
@@ -24,14 +26,10 @@ class Game {
         // Event Listeners //
         document.addEventListener('keydown', this.handleKeyMap, false);
         document.addEventListener('keyup', this.handleKeyMap, false);
-
-        this.world = new World({
-            canvas: this.canvas,
-            ctx: this.ctx,
-            reset: this.updateState,
-            updateScore: this.updateScore,
-            keyMap: this.keyMap
-        });
+        this.startButton.addEventListener('click', this.startGame, false);
+        this.restartGameButton.addEventListener('click', this.triggerReset, false);
+        
+        this.world = null;
 
         this.background = new Background({
             canvas: this.canvas,
@@ -47,13 +45,31 @@ class Game {
         
     }
 
+    startGame () {
+        document.getElementById('start-modal').classList.add("hidden");
+        this.state.reset = true;
+    }
+
+    gameOver () {
+        let ul = document.getElementById('score');
+        let score = document.createElement('li');
+        score.appendChild(document.createTextNode(`${this.state.score}`));
+        ul.appendChild(score);
+        document.getElementById('game-over-modal').classList.remove("hidden");
+    }
+
     resetGame () {
-        // debugger
-        // this.state.render = true;
+        let score = document.getElementById('score');
+        if (score.hasChildNodes()) {
+            score.removeChild(score.childNodes[0]);
+        }
+        document.getElementById('game-over-modal').classList.add("hidden")
+        
+
         this.world = new World({
             canvas: this.canvas,
             ctx: this.ctx,
-            reset: this.updateState,
+            reset: this.gameOver,
             updateScore: this.updateScore,
             keyMap: this.keyMap
         });
@@ -66,7 +82,7 @@ class Game {
         });
     }
 
-    updateState() {
+    triggerReset() {
         this.state.score = 0;
         this.state.reset = true;
 
@@ -96,7 +112,7 @@ class Game {
         }
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.background.render();
-        this.world.render();
+        if (this.world) this.world.render();
         this.drawScore();
         
     

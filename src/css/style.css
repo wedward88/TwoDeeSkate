@@ -6,7 +6,7 @@ body {
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     background-color: #98a3b8;
 }
@@ -16,6 +16,8 @@ canvas {
     background: #89839b;
     border-radius: 10px;
     border: 25px solid #677281;
+    box-sizing: border-box;
+    margin-bottom: 25px;
 }
 
 
@@ -34,48 +36,148 @@ h1 {
     font-family: 'skateandfontregular';
     color: #677281;
     font-size: 60px;
-    text-shadow: 5px 5px 5px black;
+    text-shadow: 5px 5px #89839b;
+    margin-top: 45px;
 }
 
 .start, .over {
-    
-    height: 100%;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
-    display: none;
+    
 }
 
-.start div, .over div {
-    
-    background-color: white;
+.menu {
+    background-color: #98a3b8;
     border-radius: 10px;
+    border: 15px solid #677281;
+    /* box-sizing: border-box; */
     display: flex;
     position: absolute;
     width: 500px;
     height: 500px;
-    top: 25%;
+    top: 100px;
     left: 0;
     right: 0;
     margin-left: auto;
     margin-right: auto;
-}
-
-.start div {
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.how-to {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    /* margin-top: -34px; */
 }
 
 .over {
+    font-family: 'Roboto', sans-serif;   
+}
+
+#game-over-display {
+    height: 100%;
+    justify-content: space-evenly;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+
+.over h2 {
+    font-family: 'skateandfontregular';
+    font-size: 55px;
+    text-shadow: 5px 5px #89839b;
+    color: #d7d7d7;
+}
+
+.over p {
+    font-size: 30px;
+    font-weight: lighter;
+}
+
+#score li {
+    font-size: 60px;
+    font-weight: bold;
+    color: #d7d7d7;
+    text-shadow: 5px 5px #89839b;
+}
+
+.start * {margin-top: -50px;}
+
+.start ul {
+    height: 100;
+    margin-left: 30px;
+    margin-top: 25px;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    font-family: 'Roboto', sans-serif;
+    font-weight: normal;
+}
+
+.start ul li {
+    line-height: 23px;
+    margin: 10px;
+    display: flex;
+    height: 60px;
+    align-items: center;
+    width: 150px;
+}
+
+.start ul li p {
+    padding-left: 10px;
+}
+
+.button {
+    background-color: #677281;
+    color: #d7d7d7;
+    border-radius: 5px;
+    font-size: 27px;
+    font-weight: bold;
+    padding: 10px 15px;
+}
+
+.button:hover {
+    background-color: #89839b;
+    cursor: pointer;
+}
+
+
+.how-to {
+    height: 75%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+   
+}
+
+.how-to h2 {
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.how-to p {
+    font-weight: lighter;
+    font-size: 20px;
+    line-height: 30px;
+}
+.how-to * {
+    margin: 10px;
+}
+
+.how-to-play, .how-to-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 75%;
+}
+
+#score {
+    width: 50%;
+}
+
+
+.hidden {
     display: none;
 }
+

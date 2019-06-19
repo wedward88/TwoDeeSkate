@@ -4,27 +4,55 @@
 <head>
     <meta charset="utf-8" />
     <title>2D Skate</title>
+    <link rel="stylesheet" href="./src/css/reset.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./src/css/style.css">
     <script src="./src/bundle.js"></script>
 </head>
 
 <body>
     <h1>Two Dee Skate</h1>
-    <section class="start">
-        <div>
-            <h2>Start</h2>
-            <section class="how-to">
-                    <h3>How To Play:</h3>
-                    <p>Jump to pick up speed, and safely clear the following obstacles. Mind the gap!</p>    
-                    <h3>Controls:</h3>
-                    <p>Press D to move forward, and Space to jump!</p>    
-            </section>
-            <h3>Start Game</h3>
+    <section id="start-modal" class="start">
+        <div class="menu start">
+                <ul>
+                    <li>
+                        <img src="./src/skateAssets/dumpster.png" height="50" width="50">
+                        <p>Dumpster</p>
+                    </li>
+                    <li>
+                        <img src="./src/skateAssets/hydrant.png" height="50" width="50">
+                        <p>Fire Hydrant</p>
+                    </li>
+                    <li>
+                        <img src="./src/skateAssets/trash.png" height="50" width="50">
+                        <p>Trash Can</p>
+                    </li>
+                    <li>
+                        <img src="./src/skateAssets/dangerSign.png" height="50" width="50">
+                        <p>Indicates a gap ahead!</p>
+                    </li>
+                </ul>
+                <section class="how-to">
+                    <section class="how-to-play">
+                        <h2>How To Play:</h2>
+                        <p>Jump to pick up speed, and safely clear the obstacles to the left.</p>
+                    </section>
+                    <section class="how-to-controls">
+                        <h2>Controls:</h2>
+                        <p>Press D to move forward, and Space to jump!</p>
+                    </section>
+                    <h3 id="start-button" class="button">Start Game</h3>
+                </section>
         </div>
     </section>
-    <section class="over">
-        <div>
-            <h2>Game Over</h2>
+    <section id="game-over-modal" class="over hidden">
+        <div class="menu over">
+            <div id="game-over-display">
+                <h2>Game Over</h2>
+                <p>Number of obstacles shredded:</p>
+                <ul id="score"></ul>
+                <h3 id="restart-button" class="button">Play Again</h3>
+            </div> 
         </div>
     </section>
     <canvas id="skateCanvas" width="1200" height="700">
