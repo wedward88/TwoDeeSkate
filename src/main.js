@@ -7,8 +7,11 @@ document.addEventListener('DOMContentLoaded', ()=> {
 
     
     let animate =  () => {
-        game.renderGame();
-        requestAnimationFrame(animate);
+        setTimeout(()=> {
+            game.renderGame();
+            requestAnimationFrame(animate);
+        }, 1000/60);
+        
     }
 
 
