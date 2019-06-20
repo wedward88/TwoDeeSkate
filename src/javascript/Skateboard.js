@@ -126,7 +126,7 @@ class Skateboard  {
                     this.didFall = true;
                     this.currentGround.speedX = 0;
                     if (!this.currentGround.resetInvoked) {
-                        setTimeout(this.currentGround.resetBoard, 1500);
+                        this.currentGround.resetBoard();
                         this.currentGround.resetInvoked = true;
                     }
 

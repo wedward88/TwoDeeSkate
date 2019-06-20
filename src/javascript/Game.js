@@ -62,15 +62,19 @@ class Game {
     }
 
     muteMusic () {
+        let icon = document.getElementById('volume-icon');
         if (this.music.paused) {
+            icon.innerHTML = "volume_up"
             this.music.play();
         } else {
+            icon.innerHTML = "volume_off"
             this.music.pause();
         }
     }
 
     startGame () {
-        document.getElementById('start-modal').classList.add("hidden");
+        document.getElementById('start-modal').classList.add("opacity-zero");
+        setTimeout(()=> document.getElementById('start-modal').classList.add("hidden"), 1000);
         this.triggerReset();
         this.music.play();
     }
@@ -81,25 +85,33 @@ class Game {
         score.appendChild(document.createTextNode(`${this.state.score}`));
         ul.appendChild(score);
         document.getElementById('game-over-modal').classList.remove("hidden");
+    
+        setTimeout(() => {
+            document.getElementById('game-over-modal').classList.remove("opacity-zero");
+            document.getElementById('game-over-modal').classList.add("opacity-one")
+        }, 1000);
+
     }
     
     help () {
         document.getElementById('game-over-modal').classList.add("hidden");
         document.getElementById('start-modal').classList.remove("hidden");
+        document.getElementById('start-modal').classList.remove("opacity-zero");
     }
 
     resetGame () {
-        if (!this.music.paused) {
-            this.music.pause();
-            this.music.currentTime = 0;
-            this.music.play();
-        }
+        // if (!this.music.paused) {
+        //     this.music.pause();
+        //     this.music.currentTime = 0;
+        //     this.music.play();
+        // }
         let score = document.getElementById('score');
         if (score.hasChildNodes()) {
             score.removeChild(score.childNodes[0]);
         }
-        document.getElementById('game-over-modal').classList.add("hidden")
-        
+        setTimeout(() => document.getElementById('game-over-modal').classList.add("hidden"), 1000);
+        document.getElementById('game-over-modal').classList.remove("opacity-one")
+        document.getElementById('game-over-modal').classList.add("opacity-zero")
 
         this.world = new World({
             canvas: this.canvas,
