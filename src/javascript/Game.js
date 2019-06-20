@@ -12,6 +12,18 @@ class Game {
         this.startButton = document.getElementById('start-button');
         this.restartGameButton = document.getElementById('restart-button');
         this.helpButton = document.getElementById('help-button');
+        this.muteButton  = document.getElementById('mute-button');
+
+        // Background Music //
+        this.music = document.createElement('audio');
+        this.music.src = './src/skateAssets/misirlou.mp3';
+        this.music.setAttribute("preload", "auto");
+        this.music.setAttribute("controls", "none");
+        this.music.style.display = "none";
+        this.music.volume = .25;
+        document.body.appendChild(this.music);
+
+        //////////////////////
         
         this.triggerReset = this.triggerReset.bind(this);
         this.renderGame = this.renderGame.bind(this);
@@ -19,6 +31,7 @@ class Game {
         this.updateScore = this.updateScore.bind(this);
         this.startGame = this.startGame.bind(this);
         this.gameOver = this.gameOver.bind(this);
+        this.muteMusic = this.muteMusic.bind(this);
 
         this.handleKeyMap = (e) => {
             this.keyMap[e.keyCode] = e.type == 'keydown';
@@ -30,6 +43,7 @@ class Game {
         this.startButton.addEventListener('click', this.startGame, false);
         this.restartGameButton.addEventListener('click', this.triggerReset, false);
         this.helpButton.addEventListener('click', this.help, false);
+        this.muteButton.addEventListener('click', this.muteMusic, false)
         
         this.world = null;
 
@@ -47,9 +61,18 @@ class Game {
         
     }
 
+    muteMusic () {
+        if (this.music.paused) {
+            this.music.play();
+        } else {
+            this.music.pause();
+        }
+    }
+
     startGame () {
         document.getElementById('start-modal').classList.add("hidden");
-        this.state.reset = true;
+        this.triggerReset();
+        this.music.play();
     }
     
     gameOver () {
@@ -66,6 +89,11 @@ class Game {
     }
 
     resetGame () {
+        if (!this.music.paused) {
+            this.music.pause();
+            this.music.currentTime = 0;
+            this.music.play();
+        }
         let score = document.getElementById('score');
         if (score.hasChildNodes()) {
             score.removeChild(score.childNodes[0]);
@@ -102,11 +130,11 @@ class Game {
     drawScore () {
         this.ctx.shadowColor = 'black';
         this.ctx.shadowBlur = 15;
-        this.ctx.drawImage(this.scoreBar, 940, 50, 200, 100)
+        this.ctx.drawImage(this.scoreBar, 940, 18, 200, 100)
         this.ctx.shadowBlur = 0;
-        this.ctx.font = '30px Arial'
+        this.ctx.font = '30px Nothing You Could Do'
         this.ctx.fillStyle = "black"
-        this.ctx.fillText(`Score: ${this.state.score}`, 980, 80)
+        this.ctx.fillText(`SCORE: ${this.state.score}`, 980, 50)
     }
     
 
