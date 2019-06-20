@@ -12,6 +12,7 @@ class World {
         this.reset = options.reset;
         this.updateScore = options.updateScore;
         this.keyMap = options.keyMap;
+        this.keyActiveFalse = options.keyActiveFalse;
         this.skateboard = null;
         this.ground = null;
         this.level = null;
@@ -71,7 +72,8 @@ class World {
             canvas: this.canvas,
             keyMap: this.keyMap,
             level: this.level,
-            currentGround: this.level[0]
+            currentGround: this.level[0],
+            keyActiveFalse: this.keyActiveFalse
         });
         // debugger
         

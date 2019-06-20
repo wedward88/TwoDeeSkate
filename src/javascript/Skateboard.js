@@ -9,6 +9,7 @@ class Skateboard  {
         this.currentGround = options.currentGround;
         this.currentObstacle = this.currentGround.currentObstacle;
         this.level = options.level;
+        this.keyActiveFalse = options.keyActiveFalse;
         this.didFall = false;
         
         
@@ -92,7 +93,7 @@ class Skateboard  {
         if (this.currentObstacle.type === 'gap'){
         //     overGap = !(this.leftEdge > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge )
         // } else {
-            overGap = (this.leftEdge + 20 > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge + 40)
+            overGap = (this.leftEdge + 20 > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge)
         }
             //if the board is over an object, then check to see if the board is hitting the 'ground'
    
@@ -105,10 +106,10 @@ class Skateboard  {
 
             } else if (this.currentObstacle.type === 'gap') {
                 
-                inObstacle = (this.rightEdge > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.top) ||
-                             (this.leftEdge > this.currentObstacle.leftEdge && this.leftEdge < this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.top) ||
-                             (this.leftEdge < this.currentObstacle.leftEdge && this.rightEdge > this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.top) ||
-                             (this.bottom === this.currentObstacle.top && this.leftEdge > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge)
+                inObstacle = (this.rightEdge > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.top - 50) ||
+                             (this.leftEdge > this.currentObstacle.leftEdge && this.leftEdge < this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.top - 50) ||
+                             (this.leftEdge < this.currentObstacle.leftEdge && this.rightEdge > this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.top - 50) ||
+                             (this.bottom === this.currentObstacle.top - 50 && this.leftEdge > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge)
 
             }
 
@@ -122,6 +123,7 @@ class Skateboard  {
             if (this.currentObstacle.type === 'notGap') {
                 
                 if (inObstacle) {
+                    this.keyActiveFalse();
                     this.keyMap[32] = false;
                     this.didFall = true;
                     this.currentGround.speedX = 0;
@@ -134,11 +136,13 @@ class Skateboard  {
             } else if (this.currentObstacle.type === 'gap') {
                     
                 if (inObstacle) {
+                    this.keyActiveFalse();
                     this.keyMap[68] = false;
                     this.currentGround.speedX = 0;
                     if (!this.currentGround.resetInvoked) {
                         setTimeout(this.currentGround.resetBoard, 1500);
                         this.currentGround.resetInvoked = true;
+                        this.gameOver = true;
                     }
                 }
             }

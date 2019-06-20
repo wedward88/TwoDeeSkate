@@ -24,6 +24,7 @@ class Game {
         document.body.appendChild(this.music);
 
         //////////////////////
+       
         
         this.triggerReset = this.triggerReset.bind(this);
         this.renderGame = this.renderGame.bind(this);
@@ -32,10 +33,8 @@ class Game {
         this.startGame = this.startGame.bind(this);
         this.gameOver = this.gameOver.bind(this);
         this.muteMusic = this.muteMusic.bind(this);
-
-        this.handleKeyMap = (e) => {
-            this.keyMap[e.keyCode] = e.type == 'keydown';
-        }
+        this.keyActiveFalse = this.keyActiveFalse.bind(this);
+        this.handleKeyMap = this.handleKeyMap.bind(this);
 
         // Event Listeners //
         document.addEventListener('keydown', this.handleKeyMap, false);
@@ -56,9 +55,21 @@ class Game {
 
         this.state = {
             reset: false,
-            score: 0
+            score: 0,
+            keysActive: true
         }
         
+    }
+
+    handleKeyMap(e) {
+        
+        if (this.state.keysActive) {
+            this.keyMap[e.keyCode] = e.type == 'keydown';
+        }
+    }
+
+    keyActiveFalse () {
+        this.state.keysActive = false;
     }
 
     muteMusic () {
@@ -80,6 +91,7 @@ class Game {
     }
     
     gameOver () {
+        
         let ul = document.getElementById('score');
         let score = document.createElement('li');
         score.appendChild(document.createTextNode(`${this.state.score}`));
@@ -105,6 +117,8 @@ class Game {
         //     this.music.currentTime = 0;
         //     this.music.play();
         // }
+        this.state.keysActive = true;
+
         let score = document.getElementById('score');
         if (score.hasChildNodes()) {
             score.removeChild(score.childNodes[0]);
@@ -118,7 +132,8 @@ class Game {
             ctx: this.ctx,
             reset: this.gameOver,
             updateScore: this.updateScore,
-            keyMap: this.keyMap
+            keyMap: this.keyMap,
+            keyActiveFalse: this.keyActiveFalse
         });
 
         this.background = new Background({
@@ -130,6 +145,7 @@ class Game {
     }
 
     triggerReset() {
+        this.state.gameStatus = false;
         this.state.score = 0;
         this.state.reset = true;
 
