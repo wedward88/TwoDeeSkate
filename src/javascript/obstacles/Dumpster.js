@@ -15,9 +15,9 @@ class Dumpster {
         this.height = 200;
 
         //Edges
-        this.top = this.posY + 10
-        this.leftEdge = this.posX;
-        this.rightEdge = this.posX + this.width;
+        this.top = this.posY + 20
+        this.leftEdge = this.posX - 5;
+        this.rightEdge = this.posX + this.width - 5;
     }
 
     update() {

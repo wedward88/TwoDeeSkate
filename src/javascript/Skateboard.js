@@ -90,11 +90,11 @@ class Skateboard  {
 
         
 
-        if (this.currentObstacle.type === 'gap'){
-        //     overGap = !(this.leftEdge > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge )
-        // } else {
-            overGap = (this.leftEdge + 20 > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge)
-        }
+            if (this.currentObstacle.type === 'gap'){
+            //     overGap = !(this.leftEdge > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge )
+            // } else {
+                overGap = (this.leftEdge + 20 > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge)
+            }
             //if the board is over an object, then check to see if the board is hitting the 'ground'
    
             let inObstacle;
@@ -106,10 +106,10 @@ class Skateboard  {
 
             } else if (this.currentObstacle.type === 'gap') {
                 
-                inObstacle = (this.rightEdge > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.top + 50) ||
-                             (this.leftEdge > this.currentObstacle.leftEdge && this.leftEdge < this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.top + 50) ||
-                             (this.leftEdge < this.currentObstacle.leftEdge && this.rightEdge > this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.top + 50) ||
-                             (this.bottom === this.currentObstacle.top + 50 && this.leftEdge > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge)
+                inObstacle = (this.rightEdge > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.top + this.currentObstacle.height) //||
+                            //  (this.leftEdge > this.currentObstacle.leftEdge && this.leftEdge < this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.top + 50) ||
+                            //  (this.leftEdge < this.currentObstacle.leftEdge && this.rightEdge > this.currentObstacle.rightEdge && this.bottom > this.currentObstacle.top + 50) ||
+                            //  (this.bottom === this.currentObstacle.top + 50 && this.leftEdge > this.currentObstacle.leftEdge && this.rightEdge < this.currentObstacle.rightEdge)
 
             }
 
@@ -118,7 +118,10 @@ class Skateboard  {
             if ((this.posY > this.groundLevel) && !overGap) {
                 this.posY = this.groundLevel;
                 this.gravitySpeed = 0;
-            } 
+            } else if ((this.posY > this.groundLevel) && overGap) {
+                this.keyActiveFalse();
+                this.currentGround.speedX = 0;
+            }
 
             if (this.currentObstacle.type === 'notGap') {
                 
@@ -238,10 +241,10 @@ class Skateboard  {
                 this.keyMap[32] = false
             } else {
                 // this.speedY = 2;
-                this.gravityAccelerate(-1);
+                this.gravityAccelerate(-2);
             }
         } else {
-            this.gravityAccelerate(0.4);
+            this.gravityAccelerate(0.8);
         }
 
 

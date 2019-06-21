@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', ()=> {
         setTimeout(()=> {
             game.renderGame();
             requestAnimationFrame(animate);
-        }, 1000/60);
+        }, 1000/70);
         
     }
 

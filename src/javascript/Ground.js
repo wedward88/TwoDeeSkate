@@ -27,7 +27,7 @@ class Ground {
         this.posX = this.startPos;
         
         // Physics //
-        this.friction = .98;
+        this.friction = .99;
         this.speedX = 0;
         
 
@@ -48,7 +48,7 @@ class Ground {
     update () {
         
         if (this.keyMap[68]) {
-            this.speedAccelerate(-.8);
+            this.speedAccelerate(-1);
             this.speedX += -.1;
         } 
 

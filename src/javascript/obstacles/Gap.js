@@ -9,7 +9,7 @@ class Gap {
         this.warning.src = './src/skateAssets/dangerSign.png'
 
         //Dimensions
-        this.width = 700;
+        this.width = 600;
         this.height = 200;
 
         //Edges
