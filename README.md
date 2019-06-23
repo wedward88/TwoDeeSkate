@@ -8,7 +8,7 @@
 
 ## Technologies Used
 
-JavaScript, HTML, CSS, Webpack
+JavaScript, HTML5, Canvas, CSS3, Webpack
 
 ## Screenshots
 
