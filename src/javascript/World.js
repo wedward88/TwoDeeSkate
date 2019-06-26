@@ -1,5 +1,6 @@
 import Skateboard from './Skateboard';
 import Ground from './Ground';
+import Hydrant from './obstacles/Hydrant';
 import generateRandomObstacle from './obstacles/ObstacleGenerator';
 
 class World {
@@ -44,11 +45,12 @@ class World {
                 color: "#c7c7c7",
                 startPos: 0,
                 index: 0,
-                currentObstacle: this.generateRandomObstacle({
+                currentObstacle: new Hydrant({
                     ctx: this.ctx,
                     canvas: this.canvas,
-                    posX: 800
-                })
+                    posX: 800,
+                    keyMap: this.keyMap
+                }),
             }),
             new Ground({
                 ctx: this.ctx,
